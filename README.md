@@ -13,5 +13,7 @@ sudo apt-get install build-essential python
 
 mkdir node_modules
 
-npm install ganache-cli web3@0.20.2
+sudo npm i -g npm@4.0.0
+
+sudo npm install ganache-cli web3@0.20.2
 
