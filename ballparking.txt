@@ -1,0 +1,34 @@
+Basic idea:
+
+1. Players may start 'arguments'. An argument consists of:
+   - A title
+   - A recipient of proceeds collected throughout the argument duration (Ethereum address)
+   - Customizable design elements (TBD by someone with better intuition)
+   - Customizable rules (how customizable - TBD):
+       * Allowed post length
+       * Privacy: is the argument public?
+       * Time to respond (depending on the iteration of the argument)
+       * Cost increase function
+2. The game commences as follows:
+   - The 'instigator' (the player who started the argument) pays some minimal amount of Eth, which
+     we denote X(0), to say the first 'punch' (a punch is post added to the argument).
+     This concludes the first iteration of the argument, or the 'genisis' phase.
+   - The punch is thrown; meaning, the first post appears in the argument area. The opposing team now
+     has a set amount of time T(0) to respond with a punch of their own.
+   - The opposing team has a discussion feed (? maybe redundant) and a candidate feed where potential
+     candidates (people with snappy responses to the genisis punch) can post possible punches and recruit
+     followers.
+     Posting in each feed is free, but to vote for a specific punch in the candidate feed players are
+     required to put some minimal amount of Eth on the specific punch. If the punch is eventually chosen, 
+     the players who put money on the chosen punch will pay; any Eth promised to the other (losing) 
+     candidates isn't transferred and remains at the desposal of the owning player.
+   - When the time to respond is up, IF there exists some punch with at least 2*X(0) Eth value (from
+     contributing players), then of all responses R with at least 2*X(0) Eth the response with the MOST
+     CONTRIBUTING PLAYERS (and NOT the most money) is chosen as the counter-punch. The amount of money
+     set for the chosen response is denoted X(1), X(1)*0.97 is transferred to the chosen argument
+     recipient and 0.03*X(1) is sent to the site owner.
+   - The turn goes back to the instigator's team, with updated time to respond and minimal price to
+     throw a punch. Again, the instigating team must have a punch funded with at least 2*X(1) Eth, and
+     then out of all the successfully funded punches the one with the most human votes wins.
+   - Continues until one of the teams fails to recruit the funds to reply, in which case the opposing
+     team is the winner.
