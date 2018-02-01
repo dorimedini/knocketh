@@ -37,3 +37,21 @@ Basic idea:
     argument taking place). By default, DISPLAY THE ORIGINAL FB FEED on the battlegrounds, and allow
     users to vote for the comments in question.
     Privacy issue...?
+ 4. VETO POLICY:
+    From the start of the game, there may exist persistent pools of ether/players. For any such pool P,
+    players must pay ether to P to be part of P.
+    Pools have events that can be fired depending on the total ether P.total_eth, the number of players
+    P.players.length and other procedural conditions.
+    Pools contain static information, like P.team (identifying which team the pool belongs to).
+    For example, pool A has minimal values of A.min_eth=100 and A.min_players=1, whereas pool B has a
+    minimum of B.min_eth=0.0001 and B.min_players=100. In addition, A requires A.our_turn() == true
+    (using the property A.team), and B requires B.our_turn() == false - in other words, each pool can
+    only fire on different turns only.
+    The A.and() (all requirements are met) event (enough ether, our turn) is the Buy-The-Better-Man
+    button: with enough ether, the team can pay to say the last word. This is a cheap move, so the price 
+    should be high, but this goes to some charity so the team without a good response to the last punch
+    can break a tie (or win, or loss ?) by activating the A.and() event.
+    The B.and() event (enough players, not our turn) is the Forfeit event - on our turn, we can vote to
+    stop and save face. The cost to participate is TBD (maybe after some minimal amount of rounds it's
+    free?) but should be cheaper than the Buy-The-Better-Man price.
+    Just an example of pools. Maybe too complicated a mechanic.
