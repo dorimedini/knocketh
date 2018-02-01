@@ -33,3 +33,5 @@ On Windows, this is the recommended setup:
 6. `truffle init`
 7. `npm i -D webpack react react-dom babel-core babel-loader babel-preset-react babel-preset-es2015 babel-preset-stage-2 css-loader style-loader json-loader web3@^0.20.0`
 8. npm i -g http-server
+
+To edit contracts and test them, go to https://remix.ethereum.org
