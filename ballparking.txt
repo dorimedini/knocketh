@@ -32,3 +32,8 @@ Basic idea:
      then out of all the successfully funded punches the one with the most human votes wins.
    - Continues until one of the teams fails to recruit the funds to reply, in which case the opposing
      team is the winner.
+ 3. Allow special behavior on facebook feeds: we'd probably want a login via Facebook anyway.
+    Allow players to initiate a challenge by posting a link on a feed (hopefully, a feed with an angry
+    argument taking place). By default, DISPLAY THE ORIGINAL FB FEED on the battlegrounds, and allow
+    users to vote for the comments in question.
+    Privacy issue...?
