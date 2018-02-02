@@ -55,3 +55,7 @@ Basic idea:
     stop and save face. The cost to participate is TBD (maybe after some minimal amount of rounds it's
     free?) but should be cheaper than the Buy-The-Better-Man price.
     Just an example of pools. Maybe too complicated a mechanic.
+ 5. AMUTA-OFF:
+    Two (or more) non-profit organizations compete against each other for backing. The organization with
+    the most donations when the time is up receives it's own donations + half of each of the other's
+    donations, the rest receive their remaining half.
