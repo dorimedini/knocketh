@@ -8,9 +8,6 @@ contract SecondPriceAuction {
     uint public winner_bid;
     uint private runner_up_bid;
 
-    // Events for debug mode
-    event GotOffer(uint value);
-
     // C'tor, D'tor
     function SecondPriceAuction(uint min_bid) public {
         owner = msg.sender;
@@ -21,6 +18,16 @@ contract SecondPriceAuction {
         selfdestruct(owner);
     }
     
+    // Getter
+    function my_bid() public view returns(uint) {
+        if (msg.sender == winner)
+            return winner_bid;
+        else if (msg.sender == runner_up)
+            return runner_up_bid;
+        else
+            return 0;
+    }
+
     // Make an offer. Succeeds if this meets the minimum and the winning 
     // player's bid.
     function offer() public payable {
@@ -38,7 +45,8 @@ contract SecondPriceAuction {
         winner = msg.sender;
         runner_up_bid = winner_bid;
         winner_bid = msg.value;
-        runner_up.transfer(old_runner_up_bid);
+        if (runner_up != 0)
+            runner_up.transfer(old_runner_up_bid);
     }
 
     // When done, pay the winner the runner-up's money and return everyone 
