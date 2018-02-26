@@ -14,6 +14,11 @@ contract SecondPriceAuction {
 
     // Events
     event OutOfTimeEvent(uint now_seconds, uint deadline_seconds);
+    event NoPermittion(address psudo_user);
+    event DoubleBidEvent(address cheater);
+    event TooLow(uint bid, uint need_to_beat);
+    event DoesntReachMinimum(uint bid, uint min);
+    event NoPlayers();
 
     // C'tor, D'tor
     function SecondPriceAuction(uint min_bid, uint time_limit) public {
@@ -23,7 +28,10 @@ contract SecondPriceAuction {
         deadline = limit_seconds + now;
     }
     function kill() public {
-        require(msg.sender == owner);
+        if (msg.sender != owner) {
+            NoPermittion(msg.sender);
+            return;
+        }
         if (winner != 0) {
             end_game();
         }
@@ -52,13 +60,26 @@ contract SecondPriceAuction {
             return;
         }
         // Can't bet twice in a row!
-        require(msg.sender != winner);
+        if (msg.sender == winner) {
+            if (msg.value > 0)
+                msg.sender.transfer(msg.value);
+            DoubleBidEvent(winner);
+            return;
+        }
         // Must be higher than the current winning bid, or the minimum if this
         // is the first player
-        if (winner != 0)
-            require(msg.value > bids[0]);
-        else
-            require(msg.value >= minimum_start_bid);
+        if (winner != 0 && msg.value <= bids[0]) {
+            if (msg.value > 0)
+                msg.sender.transfer(msg.value);
+            TooLow(msg.value, bids[0]);
+            return;
+        }
+        else if (msg.value < minimum_start_bid) {
+            if (msg.value > 0)
+                msg.sender.transfer(msg.value);
+            DoesntReachMinimum(msg.value, minimum_start_bid);
+            return;
+        }
         // Refund the old runner-up, update the values
         uint old_runner_up_bid = bids[1];
         address old_runner_up = runner_up;
@@ -73,8 +94,14 @@ contract SecondPriceAuction {
     // When done, pay the winner the runner-up's money (after refunding the
     // winner as well)
     function end_game() public {
-        require(msg.sender == owner);
-        require(winner != 0);
+        if (msg.sender != owner) {
+            NoPermittion(msg.sender);
+            return;
+        }
+        if (winner == 0) {
+            NoPlayers();
+            return;
+        }
         uint winnings = bids[0] + bids[1];
         address tmp_winner_address = winner;
         bids[0] = 0;
