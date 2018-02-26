@@ -2,18 +2,22 @@ pragma solidity ^0.4.11;
 
 contract SecondPriceAuction {
     address private owner;
+    uint private limit_seconds = 60*60;
+    uint public deadline;
     uint public minimum_start_bid = 100 finney;
-    address private winner;
-    address private runner_up;
+    address public winner;
+    address public runner_up;
 
     // bids[0] == wining bid
     // bids[1] == runner-up bid
     uint[2] public bids;
 
     // C'tor, D'tor
-    function SecondPriceAuction(uint min_bid) public {
+    function SecondPriceAuction(uint min_bid, uint time_limit) public {
         owner = msg.sender;
+        if (time_limit > 0) limit_seconds = time_limit;
         if (min_bid > 0) minimum_start_bid = min_bid;
+        deadline = limit_seconds + now;
     }
     function kill() public {
         require(msg.sender == owner);
