@@ -12,6 +12,9 @@ contract SecondPriceAuction {
     // bids[1] == runner-up bid
     uint[2] public bids;
 
+    // Events
+    event OutOfTimeEvent(uint now_seconds, uint deadline_seconds);
+
     // C'tor, D'tor
     function SecondPriceAuction(uint min_bid, uint time_limit) public {
         owner = msg.sender;
@@ -21,6 +24,9 @@ contract SecondPriceAuction {
     }
     function kill() public {
         require(msg.sender == owner);
+        if (winner != 0) {
+            end_game();
+        }
         selfdestruct(owner);
     }
 
@@ -38,6 +44,13 @@ contract SecondPriceAuction {
     // Make an offer. Succeeds if this meets the minimum and the winning
     // player's bid.
     function offer() public payable {
+        // Can't keep betting after time limit is done...
+        if (now > deadline) {
+            if (msg.value > 0)
+                msg.sender.transfer(msg.value);
+            OutOfTimeEvent(now, deadline);
+            return;
+        }
         // Can't bet twice in a row!
         require(msg.sender != winner);
         // Must be higher than the current winning bid, or the minimum if this
