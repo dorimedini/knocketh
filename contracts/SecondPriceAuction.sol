@@ -44,12 +44,13 @@ contract SecondPriceAuction {
             require(msg.value >= minimum_start_bid);
         // Refund the old runner-up, update the values
         uint old_runner_up_bid = bids[1];
+        address old_runner_up = runner_up;
         runner_up = winner;
         winner = msg.sender;
         bids[1] = bids[0];
         bids[0] = msg.value;
-        if (runner_up != 0)
-            runner_up.transfer(old_runner_up_bid);
+        if (old_runner_up != 0)
+            old_runner_up.transfer(old_runner_up_bid);
     }
 
     // When done, pay the winner the runner-up's money (after refunding the
