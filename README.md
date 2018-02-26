@@ -37,3 +37,10 @@ On Windows, this is the recommended setup:
 
 To edit contracts and test them, go to https://remix.ethereum.org.
 For KETH (money on he Kovan network) go to https://gitter.im/kovan-testnet/faucet?source=all-rooms-list
+
+To compile a contract X.sol:
+
+* Go to the root project directory
+* Run the following command (the full path is sometimes needed, if `truffle.js` is in the root dir):
+    <FULL-PATH-TO-TRUFFLE-BIN-DIR>/truffle compile
+    web3j truffle generate build\contracts\X.json -o ..\android-projects\sandbox\app\src\main\java\ -p com.example.dori
