@@ -27,6 +27,16 @@ contract SecondPriceAuction {
         if (min_bid > 0) minimum_start_bid = min_bid;
         deadline = limit_seconds + now;
     }
+    function enforce_time() public {
+        if (owner != msg.sender) {
+            NoPermittion(msg.sender);
+            return;
+        }
+        if (now > deadline) {
+            OutOfTimeEvent(now, deadline);
+            end_game();
+        }
+    }
     function kill() public {
         if (msg.sender != owner) {
             NoPermittion(msg.sender);
